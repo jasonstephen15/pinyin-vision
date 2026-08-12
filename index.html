@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pinyin Vision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#050505;
+    --panel:#111112;
+    --hairline:#2A2A2C;
+    --gold:#F3C769;
+    --gold-dim:#B9924A;
+    --cream:#F2EDE4;
+    --text:#F1EEE6;
+    --text-dim:#9C9995;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;overflow:hidden;}
+  body{
+    background:var(--black);
+    color:var(--text);
+    font-family:'Newsreader', serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ambient restaurant backdrop, built without any external photography */
+  .backdrop{
+    position:fixed; inset:0; z-index:0;
+    background:
+      radial-gradient(ellipse 60% 45% at 82% 15%, rgba(243,199,105,0.14), transparent 60%),
+      radial-gradient(ellipse 40% 40% at 15% 10%, rgba(243,199,105,0.08), transparent 60%),
+      radial-gradient(circle at 50% 120%, rgba(120,86,40,0.35), transparent 55%),
+      linear-gradient(180deg, #08080A 0%, #0B0B0D 55%, #17130D 100%);
+  }
+  .bokeh{position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;}
+  .bokeh span{
+    position:absolute; border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, rgba(243,199,105,0.55), rgba(243,199,105,0) 70%);
+    filter:blur(1px);
+    opacity:0.5;
+  }
+
+  /* subtle table-edge silhouette at the bottom to suggest sitting at a table */
+  .table-edge{
+    position:fixed; left:0; right:0; bottom:0; height:14vh; z-index:0;
+    background:linear-gradient(180deg, rgba(23,19,13,0) 0%, rgba(30,22,14,0.9) 60%, #1C140D 100%);
+  }
+  .table-edge::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, transparent, rgba(243,199,105,0.4), transparent);
+  }
+
+  .content{
+    position:relative; z-index:2;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    height:100dvh;
+  }
+
+  header{
+    display:flex; align-items:center; gap:12px;
+    padding:clamp(16px,3vh,28px) clamp(20px,4vw,48px) 0;
+  }
+  header img{
+    width:clamp(30px,4vh,40px); height:clamp(30px,4vh,40px);
+    border-radius:9px;
+    display:block;
+  }
+  header .word{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:clamp(14px,1.6vh,17px);
+    letter-spacing:0.01em;
+  }
+
+  main{
+    flex:1;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    align-items:center;
+    gap:clamp(20px,4vw,56px);
+    padding:0 clamp(20px,4vw,48px) clamp(10px,2vh,20px);
+    min-height:0;
+  }
+  @media (max-width:840px){
+    main{grid-template-columns:1fr; grid-template-rows:auto 1fr; padding-bottom:10px;}
+  }
+
+  .copy .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(10px,1.3vh,12px);
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    color:var(--gold);
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:clamp(10px,1.8vh,18px);
+  }
+  .eyebrow .ring{width:6px;height:6px;border-radius:50%;background:var(--gold); box-shadow:0 0 0 3px rgba(243,199,105,0.18);}
+
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:clamp(26px,4.6vh,52px);
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    max-width:12ch;
+  }
+  h1 .g{color:var(--gold);}
+
+  .copy p.lede{
+    margin-top:clamp(10px,2vh,20px);
+    max-width:44ch;
+    font-size:clamp(14px,1.9vh,18px);
+    color:var(--text-dim);
+    line-height:1.55;
+  }
+
+  .cta-row{
+    margin-top:clamp(16px,3vh,30px);
+    display:flex; flex-direction:column; gap:10px; align-items:flex-start;
+  }
+  .store-btn{
+    display:inline-flex; align-items:center; gap:11px;
+    background:var(--panel);
+    border:1px solid var(--hairline);
+    padding:clamp(9px,1.6vh,14px) clamp(16px,2vw,22px);
+    border-radius:12px;
+    opacity:0.98;
+    cursor:default;
+  }
+  .store-btn svg{width:clamp(16px,2.4vh,22px); height:clamp(16px,2.4vh,22px); flex-shrink:0;}
+  .store-btn .lines{line-height:1.15;}
+  .store-btn .lines small{
+    display:block; font-family:'JetBrains Mono',monospace;
+    font-size:clamp(8.5px,1.1vh,10px); color:var(--text-dim);
+    text-transform:uppercase; letter-spacing:0.07em;
+  }
+  .store-btn .lines strong{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(13px,1.7vh,16px); font-weight:600;
+  }
+  .cta-note{
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(9.5px,1.15vh,11.5px);
+    color:var(--text-dim);
+  }
+
+  /* phone frame with the real product demo playing inside */
+  .phone-wrap{
+    display:flex; align-items:center; justify-content:center;
+    height:100%;
+    min-height:0;
+  }
+  .phone{
+    height:min(78dvh, 560px);
+    aspect-ratio:9/19.5;
+    background:#000;
+    border-radius:9%/4.4%;
+    border:2px solid #2E2E31;
+    padding:2.2%;
+    position:relative;
+    box-shadow:
+      0 40px 90px -25px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(255,255,255,0.02),
+      0 0 60px rgba(243,199,105,0.06);
+  }
+  .phone .notch{
+    position:absolute; top:2.2%; left:50%; transform:translateX(-50%);
+    width:28%; height:2.6%; background:#000; border-radius:0 0 14px 14px; z-index:5;
+  }
+  .screen{
+    width:100%; height:100%;
+    border-radius:8%/4%;
+    overflow:hidden;
+    position:relative;
+    background:#000;
+  }
+  .screen video{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .screen .caption{
+    position:absolute; left:0; right:0; bottom:0;
+    padding:10px 14px 12px;
+    background:linear-gradient(0deg, rgba(0,0,0,0.55), transparent);
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    color:#E9E5DA;
+    letter-spacing:0.04em;
+    display:flex; align-items:center; gap:6px;
+  }
+  .caption .dot{width:5px;height:5px;border-radius:50%;background:var(--gold);}
+
+  footer{
+    position:relative; z-index:2;
+    text-align:center;
+    padding:clamp(8px,1.6vh,14px) 20px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:clamp(9px,1.1vh,10.5px);
+    color:var(--text-dim);
+  }
+
+  @media (max-width:840px){
+    .phone{height:min(46dvh, 420px);}
+    h1{max-width:14ch;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .bokeh span{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="backdrop"></div>
+<div class="bokeh">
+  <span style="width:120px;height:120px; top:8%; right:12%;"></span>
+  <span style="width:60px;height:60px; top:22%; right:28%; opacity:0.3;"></span>
+  <span style="width:90px;height:90px; top:14%; left:8%; opacity:0.25;"></span>
+  <span style="width:40px;height:40px; top:34%; left:22%; opacity:0.2;"></span>
+</div>
+<div class="table-edge"></div>
+
+<div class="content">
+  <header>
+    <img src="assets/logo.png" alt="Pinyin Vision logo">
+    <span class="word">Pinyin Vision</span>
+  </header>
+
+  <main>
+    <div class="copy">
+      <div class="eyebrow"><span class="ring"></span> Launching soon</div>
+      <h1>Read any menu <span class="g">the moment</span> you see it.</h1>
+      <p class="lede">Point your camera at Chinese text — a menu, a sign, a subtitle — and Pinyin Vision shows you the pinyin instantly, right where you're sitting.</p>
+      <div class="cta-row">
+        <div class="store-btn">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M16.365 1.43c0 1.14-.42 2.07-1.26 2.79-.84.72-1.76 1.13-2.76 1.02-.11-1.05.36-2.06 1.19-2.79.84-.73 1.94-1.11 2.83-1.02zM20.5 17.06c-.53 1.22-.79 1.77-1.48 2.85-.96 1.51-2.32 3.4-4 3.41-1.49.02-1.87-.97-3.89-.96-2.02.01-2.44 1-3.93.98-1.68-.02-2.97-1.71-3.93-3.21-2.7-4.16-2.98-9.05-1.31-11.65 1.18-1.83 3.05-2.9 4.8-2.9 1.79 0 2.92 1 4.4 1 1.44 0 2.31-1 4.4-1 1.56 0 3.21.85 4.39 2.32-3.86 2.11-3.23 7.63.55 9.16z" fill="#F1EEE6"/></svg>
+          <span class="lines"><small>Coming soon on the</small><strong>App Store</strong></span>
+        </div>
+        <div class="cta-note">We'll share the link the moment we're approved.</div>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <video autoplay loop muted playsinline src="assets/demo.mp4"></video>
+          <div class="caption"><span class="dot"></span>Live from the app</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Pinyin Vision</footer>
+</div>
+
+</body>
+</html>
