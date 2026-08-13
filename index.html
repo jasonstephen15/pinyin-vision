@@ -208,6 +208,20 @@
     font-size:clamp(9px,1.1vh,10.5px);
     color:var(--text-dim);
   }
+  footer a{
+    color:var(--text-dim);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    transition:all 0.2s;
+  }
+  footer a:hover{
+    color:var(--gold);
+    border-bottom-color:var(--gold-dim);
+  }
+  footer .sep{
+    margin:0 6px;
+    opacity:0.4;
+  }
 
   @media (max-width:840px){
     .phone{height:min(46dvh, 420px);}
@@ -260,7 +274,13 @@
     </div>
   </main>
 
-  <footer>© 2026 Pinyin Vision</footer>
+  <footer>
+    <a href="/privacy">Privacy</a>
+    <span class="sep">·</span>
+    <a href="/support">Support</a>
+    <span class="sep">·</span>
+    © 2026 Pinyin Vision
+  </footer>
 </div>
 
 </body>
