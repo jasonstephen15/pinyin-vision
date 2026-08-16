@@ -6,24 +6,32 @@
 <title>Support – PinyinVision</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --black:#050505;
-    --panel:#111112;
-    --hairline:#2A2A2C;
-    --gold:#F3C769;
-    --gold-dim:#B9924A;
-    --cream:#F2EDE4;
-    --text:#F1EEE6;
-    --text-dim:#9C9995;
+    --paper:#F0EFEC;
+    --cream:#FDF3DF;
+    --gold:#F9C650;
+    --gold-deep:#EEB02A;
+    --brown:#3F3418;
+    --ink:#1B1810;
+    --muted:#6E6858;
+    --lime:#CFE870;
+    --olive:#9BBE3F;
+    --pink:#F8C4F2;
+    --magenta:#D63BC0;
+    --peach:#FBCBA8;
+    --orange:#E8874E;
+    --peri:#B4C8FB;
+    --blue:#5B7FE9;
+    --indigo:#7A7CE8;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--black);
-    color:var(--text);
-    font-family:'Newsreader', serif;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Figtree', sans-serif;
     -webkit-font-smoothing:antialiased;
     min-height:100vh;
     display:flex;
@@ -33,9 +41,9 @@
   .backdrop{
     position:fixed; inset:0; z-index:0;
     background:
-      radial-gradient(ellipse 60% 45% at 82% 15%, rgba(243,199,105,0.08), transparent 60%),
-      radial-gradient(ellipse 40% 40% at 15% 10%, rgba(243,199,105,0.05), transparent 60%),
-      linear-gradient(180deg, #08080A 0%, #0B0B0D 55%, #0F0D0B 100%);
+      radial-gradient(ellipse 50% 40% at 85% 12%, rgba(180,200,251,0.04), transparent 60%),
+      radial-gradient(ellipse 45% 35% at 12% 15%, rgba(249,198,80,0.03), transparent 60%),
+      var(--paper);
   }
 
   .content{
@@ -46,20 +54,20 @@
   }
 
   header{
-    display:flex; align-items:center; gap:12px;
+    display:flex; align-items:center; gap:15px;
     padding:clamp(16px,3vh,28px) clamp(20px,4vw,48px);
-    border-bottom:1px solid var(--hairline);
+    border-bottom:1px solid rgba(63,52,24,0.1);
   }
   header img{
-    width:clamp(30px,4vh,40px); height:clamp(30px,4vh,40px);
-    border-radius:9px;
+    width:clamp(40px,5vh,52px); height:clamp(40px,5vh,52px);
+    border-radius:12px;
     display:block;
   }
   header .word{
-    font-family:'Space Grotesk',sans-serif;
+    font-family:'Outfit',sans-serif;
     font-weight:600;
-    font-size:clamp(14px,1.6vh,17px);
-    letter-spacing:0.01em;
+    font-size:clamp(19px,2.5vh,26px);
+    letter-spacing:-0.02em;
   }
 
   main{
@@ -71,18 +79,19 @@
   }
 
   h1{
-    font-family:'Space Grotesk',sans-serif;
+    font-family:'Outfit',sans-serif;
     font-weight:600;
     font-size:clamp(32px,6vh,48px);
     line-height:1.15;
-    letter-spacing:-0.01em;
+    letter-spacing:-0.02em;
     margin-bottom:clamp(16px,3vh,24px);
+    color:var(--ink);
   }
 
   .lede{
     font-size:clamp(16px,2.2vh,20px);
     line-height:1.6;
-    color:var(--text-dim);
+    color:var(--muted);
     margin-bottom:clamp(36px,7vh,60px);
     max-width:52ch;
   }
@@ -91,35 +100,48 @@
     margin-bottom:clamp(32px,6vh,48px);
   }
   .section h2{
-    font-family:'Space Grotesk',sans-serif;
+    font-family:'Outfit',sans-serif;
     font-weight:600;
     font-size:clamp(18px,2.6vh,24px);
     line-height:1.3;
-    color:var(--gold);
+    color:var(--brown);
     margin-bottom:clamp(10px,1.8vh,14px);
   }
   .section p{
     font-size:clamp(14px,1.8vh,17px);
-    line-height:1.65;
-    color:var(--text-dim);
+    line-height:1.7;
+    color:var(--muted);
     margin-bottom:clamp(10px,1.8vh,14px);
   }
   .section p:last-child{margin-bottom:0;}
+  .section strong{
+    color:var(--ink);
+    font-weight:600;
+  }
+  .section a{
+    color:var(--brown);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    transition:border-color 0.2s;
+  }
+  .section a:hover{
+    border-bottom-color:var(--gold-deep);
+  }
 
   .contact-card{
-    background:var(--panel);
-    border:1px solid var(--hairline);
-    border-radius:14px;
+    background:var(--cream);
+    border:1px solid rgba(249,198,80,0.2);
+    border-radius:16px;
     padding:clamp(24px,4vh,32px);
     display:flex;
     flex-direction:column;
     gap:clamp(14px,2.5vh,20px);
   }
   .contact-card h2{
-    font-family:'Space Grotesk',sans-serif;
+    font-family:'Outfit',sans-serif;
     font-weight:600;
     font-size:clamp(18px,2.6vh,24px);
-    color:var(--gold);
+    color:var(--brown);
     margin:0;
   }
   .contact-card .item{
@@ -128,45 +150,46 @@
     gap:4px;
   }
   .contact-card .item .label{
-    font-family:'JetBrains Mono',monospace;
-    font-size:clamp(10px,1.2vh,11.5px);
+    font-family:'Figtree',sans-serif;
+    font-size:clamp(11px,1.3vh,13px);
     text-transform:uppercase;
-    letter-spacing:0.08em;
-    color:var(--text-dim);
+    letter-spacing:0.05em;
+    color:var(--muted);
+    font-weight:600;
   }
   .contact-card .item .value{
     font-size:clamp(15px,2vh,18px);
-    color:var(--text);
+    color:var(--ink);
   }
   .contact-card .item .value a{
-    color:var(--gold);
+    color:var(--brown);
     text-decoration:none;
     border-bottom:1px solid transparent;
     transition:border-color 0.2s;
   }
   .contact-card .item .value a:hover{
-    border-bottom-color:var(--gold-dim);
+    border-bottom-color:var(--gold-deep);
   }
 
   footer{
     position:relative; z-index:2;
     text-align:center;
     padding:clamp(14px,2.4vh,20px) 20px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:clamp(9px,1.1vh,10.5px);
-    color:var(--text-dim);
-    border-top:1px solid var(--hairline);
+    font-size:clamp(9px,1.05vh,10.5px);
+    color:var(--muted);
+    border-top:1px solid rgba(63,52,24,0.1);
   }
   footer a{
     border:none;
-    color:var(--text-dim);
+    color:var(--muted);
+    transition:color 0.2s;
   }
   footer a:hover{
-    color:var(--gold);
+    color:var(--brown);
   }
   footer .sep{
-    margin:0 8px;
-    opacity:0.4;
+    margin:0 6px;
+    opacity:0.5;
   }
 </style>
 </head>
@@ -200,7 +223,7 @@
       <h2>Contact Us</h2>
       <div class="item">
         <span class="label">Email</span>
-        <span class="value"><a href="mailto:jasonstephen15@gmail.com">jasonstephen15@gmail.com</a></span>
+        <span class="value"><a href="mailto:pinyinvision@gmail.com">pinyinvision@gmail.com</a></span>
       </div>
       <div class="item">
         <span class="label">Response Time</span>
@@ -217,6 +240,8 @@
     <a href="/">Home</a>
     <span class="sep">·</span>
     <a href="/privacy">Privacy</a>
+    <span class="sep">·</span>
+    <a href="/support">Support</a>
     <span class="sep">·</span>
     © 2026 PinyinVision
   </footer>
