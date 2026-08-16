@@ -6,24 +6,32 @@
 <title>Privacy Policy – PinyinVision</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --black:#050505;
-    --panel:#111112;
-    --hairline:#2A2A2C;
-    --gold:#F3C769;
-    --gold-dim:#B9924A;
-    --cream:#F2EDE4;
-    --text:#F1EEE6;
-    --text-dim:#9C9995;
+    --paper:#F0EFEC;
+    --cream:#FDF3DF;
+    --gold:#F9C650;
+    --gold-deep:#EEB02A;
+    --brown:#3F3418;
+    --ink:#1B1810;
+    --muted:#6E6858;
+    --lime:#CFE870;
+    --olive:#9BBE3F;
+    --pink:#F8C4F2;
+    --magenta:#D63BC0;
+    --peach:#FBCBA8;
+    --orange:#E8874E;
+    --peri:#B4C8FB;
+    --blue:#5B7FE9;
+    --indigo:#7A7CE8;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--black);
-    color:var(--text);
-    font-family:'Newsreader', serif;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Figtree', sans-serif;
     -webkit-font-smoothing:antialiased;
     min-height:100vh;
     display:flex;
@@ -33,9 +41,9 @@
   .backdrop{
     position:fixed; inset:0; z-index:0;
     background:
-      radial-gradient(ellipse 60% 45% at 82% 15%, rgba(243,199,105,0.08), transparent 60%),
-      radial-gradient(ellipse 40% 40% at 15% 10%, rgba(243,199,105,0.05), transparent 60%),
-      linear-gradient(180deg, #08080A 0%, #0B0B0D 55%, #0F0D0B 100%);
+      radial-gradient(ellipse 50% 40% at 85% 12%, rgba(180,200,251,0.04), transparent 60%),
+      radial-gradient(ellipse 45% 35% at 12% 15%, rgba(249,198,80,0.03), transparent 60%),
+      var(--paper);
   }
 
   .content{
@@ -46,20 +54,20 @@
   }
 
   header{
-    display:flex; align-items:center; gap:12px;
+    display:flex; align-items:center; gap:15px;
     padding:clamp(16px,3vh,28px) clamp(20px,4vw,48px);
-    border-bottom:1px solid var(--hairline);
+    border-bottom:1px solid rgba(63,52,24,0.1);
   }
   header img{
-    width:clamp(30px,4vh,40px); height:clamp(30px,4vh,40px);
-    border-radius:9px;
+    width:clamp(40px,5vh,52px); height:clamp(40px,5vh,52px);
+    border-radius:12px;
     display:block;
   }
   header .word{
-    font-family:'Space Grotesk',sans-serif;
+    font-family:'Outfit',sans-serif;
     font-weight:600;
-    font-size:clamp(14px,1.6vh,17px);
-    letter-spacing:0.01em;
+    font-size:clamp(19px,2.5vh,26px);
+    letter-spacing:-0.02em;
   }
 
   main{
@@ -71,35 +79,37 @@
   }
 
   h1{
-    font-family:'Space Grotesk',sans-serif;
+    font-family:'Outfit',sans-serif;
     font-weight:600;
     font-size:clamp(28px,5vh,42px);
     line-height:1.15;
-    letter-spacing:-0.01em;
+    letter-spacing:-0.02em;
     margin-bottom:clamp(8px,1.5vh,14px);
+    color:var(--ink);
   }
   .subtitle{
-    font-family:'JetBrains Mono',monospace;
-    font-size:clamp(11px,1.3vh,13px);
-    color:var(--text-dim);
+    font-family:'Figtree',sans-serif;
+    font-size:clamp(12px,1.4vh,14px);
+    color:var(--muted);
+    font-weight:500;
     margin-bottom:clamp(28px,5vh,48px);
   }
 
   .intro{
     font-size:clamp(15px,2vh,18px);
     line-height:1.6;
-    color:var(--text);
+    color:var(--ink);
     margin-bottom:clamp(32px,6vh,56px);
     padding-bottom:clamp(24px,4vh,40px);
-    border-bottom:1px solid var(--hairline);
+    border-bottom:1px solid rgba(63,52,24,0.1);
   }
 
   h2{
-    font-family:'Space Grotesk',sans-serif;
+    font-family:'Outfit',sans-serif;
     font-weight:600;
     font-size:clamp(18px,2.6vh,24px);
     line-height:1.3;
-    color:var(--gold);
+    color:var(--brown);
     margin-top:clamp(28px,5vh,44px);
     margin-bottom:clamp(12px,2vh,16px);
   }
@@ -107,8 +117,8 @@
 
   p{
     font-size:clamp(14px,1.8vh,17px);
-    line-height:1.65;
-    color:var(--text-dim);
+    line-height:1.7;
+    color:var(--muted);
     margin-bottom:clamp(14px,2.5vh,20px);
   }
 
@@ -118,8 +128,8 @@
   }
   li{
     font-size:clamp(14px,1.8vh,17px);
-    line-height:1.65;
-    color:var(--text-dim);
+    line-height:1.7;
+    color:var(--muted);
     padding-left:20px;
     position:relative;
     margin-bottom:8px;
@@ -134,24 +144,24 @@
   }
 
   strong{
-    color:var(--text);
-    font-weight:500;
+    color:var(--ink);
+    font-weight:600;
   }
 
   a{
-    color:var(--gold);
+    color:var(--brown);
     text-decoration:none;
     border-bottom:1px solid transparent;
     transition:border-color 0.2s;
   }
   a:hover{
-    border-bottom-color:var(--gold-dim);
+    border-bottom-color:var(--gold-deep);
   }
 
   .contact-box{
-    background:var(--panel);
-    border:1px solid var(--hairline);
-    border-radius:12px;
+    background:var(--cream);
+    border:1px solid rgba(249,198,80,0.2);
+    border-radius:16px;
     padding:clamp(20px,3.5vh,28px);
     margin-top:clamp(32px,6vh,48px);
   }
@@ -170,21 +180,21 @@
     position:relative; z-index:2;
     text-align:center;
     padding:clamp(14px,2.4vh,20px) 20px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:clamp(9px,1.1vh,10.5px);
-    color:var(--text-dim);
-    border-top:1px solid var(--hairline);
+    font-size:clamp(9px,1.05vh,10.5px);
+    color:var(--muted);
+    border-top:1px solid rgba(63,52,24,0.1);
   }
   footer a{
     border:none;
-    color:var(--text-dim);
+    color:var(--muted);
+    transition:color 0.2s;
   }
   footer a:hover{
-    color:var(--gold);
+    color:var(--brown);
   }
   footer .sep{
-    margin:0 8px;
-    opacity:0.4;
+    margin:0 6px;
+    opacity:0.5;
   }
 </style>
 </head>
@@ -269,7 +279,7 @@
     <p>PinyinVision is not directed to children under 13.</p>
 
     <h2>9. Your rights</h2>
-    <p>You have the right to access, correct, export, and delete your data. You can delete data in-app or email us at <a href="mailto:jasonstephen15@gmail.com">jasonstephen15@gmail.com</a>. We do not sell or share your data for cross-context advertising.</p>
+    <p>You have the right to access, correct, export, and delete your data. You can delete data in-app or email us at <a href="mailto:pinyinvision@gmail.com">pinyinvision@gmail.com</a>. We do not sell or share your data for cross-context advertising.</p>
 
     <h2>10. International transfers</h2>
     <p>Your information may be transferred to and processed in the United States and other countries.</p>
@@ -280,7 +290,7 @@
     <div class="contact-box">
       <h2>12. Contact</h2>
       <p><strong>PinyinVision</strong></p>
-      <p>Email: <a href="mailto:jasonstephen15@gmail.com">jasonstephen15@gmail.com</a></p>
+      <p>Email: <a href="mailto:pinyinvision@gmail.com">pinyinvision@gmail.com</a></p>
       <p>Website: <a href="https://pinyinvision.com">https://pinyinvision.com</a></p>
       <p>Published at: <a href="https://pinyinvision.com/privacy">https://pinyinvision.com/privacy</a></p>
     </div>
@@ -288,6 +298,8 @@
 
   <footer>
     <a href="/">Home</a>
+    <span class="sep">·</span>
+    <a href="/privacy">Privacy</a>
     <span class="sep">·</span>
     <a href="/support">Support</a>
     <span class="sep">·</span>
