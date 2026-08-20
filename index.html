@@ -81,10 +81,49 @@ h1{font-size:clamp(24px,4.4vh,46px);line-height:1.05;font-weight:600;max-width:1
 .store small{display:block;font-size:clamp(12px,1.5vh,14px);opacity:.7;font-weight:500;text-align:left}
 .store strong{font-family:'Outfit',sans-serif;font-size:clamp(20px,2.6vh,26px);font-weight:600;display:block;text-align:left}
 footer{flex-shrink:0;text-align:center;padding-top:7px;font-size:clamp(9px,1.05vh,10.5px);color:var(--muted)}
-footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;transition:all .2s}
-footer a:hover{color:var(--brown);border-bottom-color:var(--brown)}
-footer .sep{margin:0 6px;opacity:.5}
+footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;transition:border-color 0.2s}
+footer a:hover{border-bottom-color:var(--gold-deep)}
 @media(prefers-reduced-motion:reduce){.cap,.segbar .seg i,.pane{transition:none;animation:none}}
+
+/* ============ MOBILE — version A: scrolling page, sticky download bar ============ */
+@media(max-width:860px){
+  html,body{height:auto;overflow-x:hidden;overflow-y:auto}
+  .blobs{position:absolute;height:100%;opacity:.55}
+  .page{height:auto;min-height:100dvh;padding:18px 22px calc(112px + env(safe-area-inset-bottom))}
+
+  header{justify-content:center;gap:12px;margin-bottom:6px}
+  header img{width:44px;height:44px}
+  header .nm{font-size:22px}
+
+  main{gap:20px;padding:12px 0;justify-content:flex-start}
+  h1{font-size:clamp(31px,7.6vw,42px);line-height:1.06;max-width:14ch}
+  .lede{font-size:clamp(15px,3.9vw,17.5px);max-width:34ch;min-height:0;line-height:1.5}
+
+  .modes{padding:5px}
+  .modes button{font-size:15px;padding:11px 22px}
+
+  .row{flex-direction:column;gap:30px;width:100%;max-width:100%;flex:none}
+  .phone{height:auto;width:min(70vw,290px)}
+
+  .tour{max-width:100%;width:100%;text-align:center}
+  .tour .lbl{font-size:14px;margin-bottom:16px}
+  .segbar{max-width:250px;margin:0 auto}
+  .segbar .seg{height:5px}
+  .capwrap{min-height:120px;margin-top:22px}
+  .cap b{font-size:clamp(29px,7.2vw,37px);margin-bottom:14px}
+  .cap span{font-size:clamp(16px,4.2vw,18.5px);max-width:32ch;margin:0 auto}
+
+  /* download bar pinned in view so the CTA is always one tap away */
+  .store{position:fixed;z-index:60;left:50%;transform:translateX(-50%);
+    bottom:calc(18px + env(safe-area-inset-bottom));width:calc(100% - 44px);max-width:420px;
+    justify-content:center;gap:14px;padding:17px 26px;border-radius:18px;
+    box-shadow:0 10px 30px -8px rgba(27,24,16,.45)}
+  .store svg{width:30px;height:30px}
+  .store small{font-size:12.5px}
+  .store strong{font-size:22px}
+
+  footer{padding-top:26px}
+}
 </style>
 </head>
 <body>
@@ -173,9 +212,9 @@ footer .sep{margin:0 6px;opacity:.5}
 
   <footer>
     <a href="/privacy">Privacy</a>
-    <span class="sep">·</span>
+    ·
     <a href="/support">Support</a>
-    <span class="sep">·</span>
+    ·
     © 2026 PinyinVision
   </footer>
 </div>
@@ -224,12 +263,37 @@ footer .sep{margin:0 6px;opacity:.5}
     document.getElementById('segT').classList.toggle('live',isT);
     document.getElementById('segD').classList.toggle('live',!isT);
     document.getElementById('lede').textContent=LEDE[m];
-    if(isT){ vD.pause(); vT.play(); sync(vT,capsT,segsT); }
-    else   { vT.pause(); vD.currentTime=0; vD.play(); sync(vD,capsD,segsD); }
+    if(isT){ vD.pause(); tryPlay(vT); sync(vT,capsT,segsT); }
+    else   { vT.pause(); vD.currentTime=0; tryPlay(vD); sync(vD,capsD,segsD); }
   }
   document.getElementById('mTranslate').addEventListener('click',function(){ setMode('translate'); });
   document.getElementById('mDetect').addEventListener('click',function(){ setMode('detect'); });
 
+  /* Kick off playback.
+     The autoplay attribute on its own isn't enough: the clip is a ~900KB
+     inline data URI that often isn't ready at parse time, and iOS refuses
+     autoplay altogether in Low Power Mode. When it doesn't start, the video
+     sits on frame one and the captions never advance past step one — so
+     retry as the media becomes ready, when the tab comes back into view,
+     and on the first user gesture (which lifts the block outright). */
+  function tryPlay(v){
+    if(!v || !v.paused) return;
+    var p = v.play();
+    if(p && p.catch) p.catch(function(){});   // blocked; a later hook retries
+  }
+  function start(){ tryPlay(mode==='translate' ? vT : vD); }
+
+  ['loadeddata','canplay','canplaythrough'].forEach(function(ev){
+    vT.addEventListener(ev, start);
+  });
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden) start();
+  });
+  ['pointerdown','touchstart','keydown'].forEach(function(ev){
+    document.addEventListener(ev, start, {passive:true});
+  });
+
+  start();
   sync(vT,capsT,segsT);
 })();
 </script>
